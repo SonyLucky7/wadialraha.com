@@ -401,7 +401,7 @@ export default function AboutContent() {
               eyebrow="CUSTOMER-FIRST ETHICS"
               title="Our Working"
               titleAccent="Approach"
-              centered={true}
+              align="center"
               subtitle="Five fundamental operating standards that govern every installation, diagnostic visit, and maintenance contract across the UAE."
             />
 
