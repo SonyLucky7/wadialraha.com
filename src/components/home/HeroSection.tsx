@@ -6,9 +6,6 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import {
   ArrowRight,
-  Lightning,
-  Gear,
-  Clock,
   Warning,
 } from "@phosphor-icons/react";
 import { COMPANY } from "@/lib/constants";
@@ -84,7 +81,7 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="flex flex-wrap items-center gap-3.5 sm:gap-4 mb-9 sm:mb-11"
+            className="flex flex-wrap items-center gap-3.5 sm:gap-4"
           >
             {/* Primary CTA: Request a Quote */}
             <Link
@@ -104,61 +101,11 @@ export function HeroSection() {
               <span>24/7 Emergency Service</span>
             </Link>
           </motion.div>
-
-          {/* 5. Trust Indicators */}
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-5 border-t border-white/15 max-w-lg lg:max-w-xl"
-          >
-            {/* Fast Response */}
-            <div className="flex items-start gap-2.5 p-3 rounded-xl bg-black/30 backdrop-blur-md border border-white/10 hover:border-white/20 transition-all">
-              <div className="w-7 h-7 rounded-lg bg-[#F1171E]/20 flex items-center justify-center text-[#F1171E] shrink-0 mt-0.5">
-                <Lightning weight="bold" size={16} />
-              </div>
-              <div>
-                <h4 className="font-extrabold text-xs text-white uppercase tracking-wider">
-                  FAST RESPONSE
-                </h4>
-                <p className="text-[11px] text-gray-300 mt-0.5 leading-snug">
-                  Under 60 Mins Arrival
-                </p>
-              </div>
-            </div>
-
-            {/* Competitive Pricing */}
-            <div className="flex items-start gap-2.5 p-3 rounded-xl bg-black/30 backdrop-blur-md border border-white/10 hover:border-white/20 transition-all">
-              <div className="w-7 h-7 rounded-lg bg-[#F1171E]/20 flex items-center justify-center text-[#F1171E] shrink-0 mt-0.5">
-                <Gear weight="bold" size={16} />
-              </div>
-              <div>
-                <h4 className="font-extrabold text-xs text-white uppercase tracking-wider">
-                  COMPETITIVE
-                </h4>
-                <p className="text-[11px] text-gray-300 mt-0.5 leading-snug">
-                  Fair, Transparent Rates
-                </p>
-              </div>
-            </div>
-
-            {/* 24/7 Emergency */}
-            <div className="flex items-start gap-2.5 p-3 rounded-xl bg-black/30 backdrop-blur-md border border-white/10 hover:border-white/20 transition-all">
-              <div className="w-8 h-8 rounded-lg bg-[#F1171E]/20 flex items-center justify-center text-[#F1171E] shrink-0 mt-0.5">
-                <Clock weight="bold" size={16} />
-              </div>
-              <div>
-                <h4 className="font-extrabold text-xs text-white uppercase tracking-wider">
-                  24/7 EMERGENCY
-                </h4>
-                <p className="text-[11px] text-gray-300 mt-0.5 leading-snug">
-                  Rapid Mobile Dispatch
-                </p>
-              </div>
-            </div>
-          </motion.div>
         </div>
       </div>
+
+      {/* Subtle bottom edge separator between Hero and TrustBar */}
+      <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/15 to-transparent z-10 pointer-events-none" />
     </section>
   );
 }
