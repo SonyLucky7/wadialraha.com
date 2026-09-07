@@ -29,7 +29,7 @@ export default function ServicePageContent({ service }: ServicePageContentProps)
       </div>
 
       {/* Hero Section */}
-      <section className="bg-[#0B1E34] py-16 lg:py-24 relative overflow-hidden">
+      <section className="bg-[#0B1E34] pt-28 pb-16 sm:pt-32 sm:pb-20 lg:pt-36 lg:pb-24 relative overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#F1171E] to-transparent opacity-50" />
         
         {/* Service Number Watermark */}

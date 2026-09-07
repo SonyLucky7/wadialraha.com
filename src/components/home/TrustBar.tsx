@@ -28,8 +28,8 @@ export function TrustBar() {
 
   return (
     <section className="relative z-10 -mt-1 bg-white">
-      <div className="max-w-[1400px] mx-auto px-6 lg:px-8">
-        <div className="grid md:grid-cols-3 gap-0 border border-gray-border rounded-2xl overflow-hidden shadow-lg -mt-16 bg-white">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid md:grid-cols-3 gap-0 border border-gray-border rounded-2xl overflow-hidden shadow-lg -mt-10 sm:-mt-12 lg:-mt-14 bg-white">
           {TRUST_ITEMS.map((item, index) => (
             <motion.div
               key={item.title}

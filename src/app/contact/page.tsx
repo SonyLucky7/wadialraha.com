@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <>
-      <section className="bg-[#0B1220] py-20 lg:py-28 relative overflow-hidden">
+      <section className="bg-[#0B1220] pt-28 pb-20 sm:pt-32 sm:pb-24 lg:pt-36 lg:pb-28 relative overflow-hidden">
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Contact Us", href: "/contact" }]} />
           <div className="mt-8 max-w-3xl">

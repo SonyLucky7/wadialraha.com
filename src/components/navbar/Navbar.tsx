@@ -29,31 +29,31 @@ export default function Navbar() {
         isScrolled ? "h-16 shadow-md" : "h-20"
       }`}
     >
-      <div className="max-w-[1400px] mx-auto px-6 h-full flex items-center justify-between">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 h-full flex items-center justify-between gap-2 xl:gap-4">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-3 group py-1">
-          <div className="relative h-11 sm:h-12 w-[80px] sm:w-[88px] shrink-0 transition-transform group-hover:scale-105 duration-200">
+        <Link href="/" className="flex items-center gap-2.5 sm:gap-3 group py-1 shrink-0">
+          <div className="relative h-10 sm:h-12 w-[72px] sm:w-[88px] shrink-0 transition-transform group-hover:scale-105 duration-200">
             <Image
               src="/images/logo-transparent.png"
               alt="WADI AL RAHA Logo"
               fill
               priority
-              sizes="(max-width: 640px) 80px, 88px"
+              sizes="(max-width: 640px) 72px, 88px"
               className="object-contain object-left"
             />
           </div>
           <div className="flex flex-col justify-center">
-            <span className="font-extrabold text-[#0B1220] tracking-tight text-lg sm:text-xl leading-none group-hover:text-[#C9A227] transition-colors">
+            <span className="font-extrabold text-[#0B1220] tracking-tight text-base sm:text-lg xl:text-xl leading-none group-hover:text-[#F1171E] transition-colors whitespace-nowrap">
               WADI AL RAHA
             </span>
-            <span className="text-[10px] sm:text-[11px] font-semibold tracking-wider text-[#6B7280] uppercase mt-1">
+            <span className="text-[9px] sm:text-[10px] xl:text-[11px] font-semibold tracking-wider text-[#6B7280] uppercase mt-1 whitespace-nowrap">
               HVAC & Technical Services
             </span>
           </div>
         </Link>
 
         {/* Desktop Nav */}
-        <nav className="hidden lg:flex items-center gap-8">
+        <nav className="hidden lg:flex items-center gap-3 xl:gap-5 2xl:gap-7 shrink min-w-0">
           {NAV_ITEMS.map((item) => {
             const isActive = pathname === item.href || (pathname.startsWith(item.href) && item.href !== '/');
             const hasChildren = item.children && item.children.length > 0;
@@ -67,12 +67,12 @@ export default function Navbar() {
               >
                 <Link
                   href={item.href}
-                  className={`flex items-center gap-1 font-medium transition-colors ${
-                    isActive ? "text-[#F1171E] font-semibold" : "text-[#133256] hover:text-[#F1171E]"
+                  className={`flex items-center gap-1 text-xs xl:text-sm font-semibold whitespace-nowrap transition-colors ${
+                    isActive ? "text-[#F1171E]" : "text-[#133256] hover:text-[#F1171E]"
                   }`}
                 >
                   {item.label}
-                  {hasChildren && <CaretDown weight="bold" className="w-4 h-4" />}
+                  {hasChildren && <CaretDown weight="bold" className="w-3.5 h-3.5 xl:w-4 xl:h-4" />}
                 </Link>
                 {isActive && (
                   <motion.div
@@ -115,17 +115,17 @@ export default function Navbar() {
         </nav>
 
         {/* Desktop CTAs */}
-        <div className="hidden lg:flex items-center gap-3">
+        <div className="hidden lg:flex items-center gap-2 xl:gap-3 shrink-0">
           <a
             href={`tel:${COMPANY.phones[0].raw}`}
-            className="flex items-center gap-2 px-4 py-2 bg-[#F1171E] text-white rounded-lg font-bold text-sm hover:bg-[#D61218] transition-colors shadow-sm"
+            className="flex items-center gap-1.5 px-3 py-2 xl:px-4 xl:py-2 bg-[#F1171E] text-white rounded-lg font-bold text-xs xl:text-sm hover:bg-[#D61218] transition-colors shadow-sm whitespace-nowrap"
           >
-            <Lightning weight="fill" className="w-4 h-4 text-white" />
-            Emergency Service
+            <Lightning weight="fill" className="w-3.5 h-3.5 xl:w-4 xl:h-4 text-white shrink-0" />
+            <span>Emergency Service</span>
           </a>
           <Link
             href="/contact"
-            className="px-4 py-2 bg-[#133256] text-white rounded-lg font-semibold text-sm hover:bg-[#0B1E34] transition-colors"
+            className="px-3 py-2 xl:px-4 xl:py-2 bg-[#133256] text-white rounded-lg font-semibold text-xs xl:text-sm hover:bg-[#0B1E34] transition-colors whitespace-nowrap"
           >
             Get a Quote
           </Link>

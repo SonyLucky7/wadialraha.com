@@ -15,7 +15,7 @@ export const NAV_ITEMS: NavItem[] = [
     { label: 'Cold Store', href: '/services/cold-store' },
     { label: 'Ice Machines', href: '/services/ice-machine' },
   ]},
-  { label: 'Pre Qualification Doc', href: '/pre-qualification' },
+  { label: 'Pre-Qualification', href: '/pre-qualification' },
   { label: 'Company Profile', href: '/company-profile' },
   { label: 'Contact', href: '/contact' },
 ];

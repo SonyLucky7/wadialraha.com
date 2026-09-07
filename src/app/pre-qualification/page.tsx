@@ -23,7 +23,7 @@ export default function PreQualificationPage() {
 
   return (
     <>
-      <section className="bg-[#0B1E34] py-20 lg:py-28 relative overflow-hidden border-b border-[#133256]">
+      <section className="bg-[#0B1E34] pt-28 pb-20 sm:pt-32 sm:pb-24 lg:pt-36 lg:pb-28 relative overflow-hidden border-b border-[#133256]">
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Pre-Qualification", href: "/pre-qualification" }]} />
           
