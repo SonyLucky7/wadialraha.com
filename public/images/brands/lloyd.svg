@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 120" width="400" height="120">
+  <g fill="none" fill-rule="evenodd">
+    <!-- Red Accent Pill / Tag -->
+    <rect width="36" height="7" x="32" y="16" fill="#E21B22" rx="3.5" />
+    <!-- Lloyd Wordmark in Authentic Modern Geometry -->
+    <text x="30" y="82" fill="#E21B22" font-family="'Plus Jakarta Sans', 'Arial Black', sans-serif" font-weight="900" font-size="64" letter-spacing="4">
+      LLOYD
+    </text>
+    <!-- Endorsement Line -->
+    <text x="32" y="104" fill="#64748B" font-family="'Plus Jakarta Sans', 'Arial', sans-serif" font-weight="700" font-size="11" letter-spacing="3">
+      A HAVELLS BRAND
+    </text>
+  </g>
+</svg>

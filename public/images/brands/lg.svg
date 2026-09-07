@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 120" width="380" height="120">
+  <g transform="translate(15, 10) scale(0.424)">
+    <circle cx="118" cy="118" r="118" fill="#C40043" />
+    <path d="M 68 64 L 68 152 L 136 152" fill="none" stroke="#FFFFFF" stroke-width="17" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M 168 118 A 66 66 0 1 0 118 184 L 118 152" fill="none" stroke="#FFFFFF" stroke-width="17" stroke-linecap="round" stroke-linejoin="round" />
+    <circle cx="88" cy="88" r="10" fill="#FFFFFF" />
+  </g>
+  <text x="145" y="80" fill="#54585A" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-weight="800" font-size="64" letter-spacing="2">LG</text>
+  <text x="147" y="102" fill="#8892B0" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-weight="700" font-size="12" letter-spacing="3.5">Life's Good</text>
+</svg>

@@ -1,26 +1,165 @@
 @import "tailwindcss";
 
+/* ─── WADI AL RAHA Design Tokens (Derived from Official Logo) ─── */
+
 :root {
+  /* Logo Core Colors */
+  --color-brand-navy: #133256;      /* Logo Navy Blue */
+  --color-brand-red: #F1171E;       /* Logo Red Lightning & Slash */
+  --color-brand-red-hover: #D61218;
+  --color-brand-red-light: #FFF1F2;
+
+  /* Primary Theme Roles */
+  --color-white: #ffffff;
+  --color-navy: #133256;
+  --color-charcoal: #0B1E34;        /* Deep Midnight Navy for Hero & Footer */
+  --color-navy-dark: #071524;
+
+  /* Accent Role mapped to Logo Red */
+  --color-red: #F1171E;
+  --color-red-hover: #D61218;
+  --color-gold: #F1171E;            /* Aligned to Logo Red for instant system compatibility */
+  --color-gold-light: #FF4D53;
+  --color-gold-hover: #D61218;
+
+  /* Supporting & Cooling Tones */
+  --color-gray-light: #F4F8FB;      /* Clean HVAC Ice Blue Tint */
+  --color-gray-medium: #64748B;
+  --color-gray-border: #E2E8F0;
+
+  /* Semantic */
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #133256;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(19, 50, 86, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(19, 50, 86, 0.08), 0 2px 4px -2px rgba(19, 50, 86, 0.05);
+  --shadow-lg: 0 10px 15px -3px rgba(19, 50, 86, 0.1), 0 4px 6px -4px rgba(19, 50, 86, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(19, 50, 86, 0.12), 0 8px 10px -6px rgba(19, 50, 86, 0.06);
+  --shadow-card: 0 1px 3px rgba(19, 50, 86, 0.06), 0 1px 2px rgba(19, 50, 86, 0.04);
+  --shadow-card-hover: 0 12px 32px rgba(19, 50, 86, 0.12), 0 4px 10px rgba(19, 50, 86, 0.06);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-plus-jakarta);
+
+  /* Brand Colors */
+  --color-navy: #133256;
+  --color-charcoal: #0B1E34;
+  --color-brand-red: #F1171E;
+  --color-brand-navy: #133256;
+  --color-red: #F1171E;
+  --color-gold: #F1171E;
+  --color-gold-light: #FF4D53;
+  --color-gold-hover: #D61218;
+  --color-gray-light: #F4F8FB;
+  --color-gray-medium: #64748B;
+  --color-gray-border: #E2E8F0;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ─── Base Reset ─── */
+
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-plus-jakarta), system-ui, -apple-system, sans-serif;
+}
+
+/* ─── Typography Utility ─── */
+
+.heading-display {
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+}
+
+.heading-section {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+.body-text {
+  font-weight: 400;
+  line-height: 1.7;
+}
+
+/* ─── Brand Red Accent Line (Derived from Logo Slash) ─── */
+
+.gold-line,
+.brand-line {
+  width: 48px;
+  height: 3px;
+  background: var(--color-brand-red);
+  border-radius: 2px;
+}
+
+.gold-line-sm,
+.brand-line-sm {
+  width: 32px;
+  height: 2px;
+  background: var(--color-brand-red);
+  border-radius: 1px;
+}
+
+/* ─── Smooth Scroll ─── */
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ─── Focus Styles ─── */
+
+:focus-visible {
+  outline: 2px solid var(--color-brand-red);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ─── Selection ─── */
+
+::selection {
+  background: rgba(241, 23, 30, 0.15);
+  color: var(--color-navy);
+}
+
+/* ─── Scrollbar ─── */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-gray-light);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #94A3B8;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-navy);
 }
