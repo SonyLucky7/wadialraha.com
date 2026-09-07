@@ -17,29 +17,29 @@ import { COMPANY } from "@/lib/constants";
 export function HeroSection() {
   return (
     <section className="relative min-h-[100dvh] lg:min-h-screen bg-[#071322] text-white flex items-center overflow-hidden pt-24 sm:pt-28 pb-16 sm:pb-20">
-      {/* ─── FULL-BLEED 4K IMAGE BACKGROUND ─── */}
+      {/* ─── FULL-BLEED 4K/8K LOSSLESS BACKGROUND (3840 x 2143 Native UHD) ─── */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="/images/hero/ac-mechanic-hero-fullbleed.jpg"
-          alt="WADI AL RAHA Professional AC Mechanic in UAE"
+          src="/images/hero/ac-mechanic-hero-4k-flipped.jpg"
+          alt="WADI AL RAHA Professional Certified AC Mechanic in UAE"
           fill
           priority
+          unoptimized // Prevents Next.js downsampling; serves full native 3840px 4K pixels
           sizes="100vw"
-          className="object-cover object-center lg:object-[80%_center] filter contrast-[1.04]"
+          className="object-cover object-[70%_center] lg:object-[center_35%] filter contrast-[1.03] select-none"
         />
 
-        {/* Cinematic Deep Navy Gradients for Text Readability */}
-        {/* Left-to-right gradient ensuring text on left is 100% crisp and readable */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#071322] via-[#071322]/85 to-transparent w-full lg:w-[65%]" />
+        {/* Cinematic Deep Navy Gradient Overlay for Text Readability */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#071322] via-[#071322]/80 to-transparent w-full lg:w-[62%] pointer-events-none" />
         
         {/* Subtle top and bottom fades */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#071322] via-transparent to-[#071322]/60" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#071322] via-transparent to-[#071322]/50 pointer-events-none" />
         
-        {/* Mobile full-cover dark tint so text remains readable over the image on small screens */}
-        <div className="absolute inset-0 bg-[#071322]/60 lg:hidden" />
+        {/* Mobile dark backdrop tint to ensure contrast */}
+        <div className="absolute inset-0 bg-[#071322]/65 lg:hidden pointer-events-none" />
       </div>
 
-      {/* ─── OVERLAY CONTENT & BUTTONS (OVER THE IMAGE) ─── */}
+      {/* ─── FOREGROUND CONTENT & BUTTONS OVERLAID OVER THE IMAGE ─── */}
       <div className="relative z-10 max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 w-full">
         <div className="max-w-2xl lg:max-w-3xl">
           
@@ -86,7 +86,7 @@ export function HeroSection() {
             transition={{ duration: 0.6, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
             className="flex flex-wrap items-center gap-4 mb-10 sm:mb-12"
           >
-            {/* Primary CTA: Request a Quote */}
+            {/* Primary CTA */}
             <Link
               href="/contact"
               className="group inline-flex items-center justify-center gap-2.5 h-14 px-8 bg-[#F1171E] text-white font-bold rounded-xl hover:bg-[#D61218] transition-all shadow-xl shadow-[#F1171E]/30 hover:shadow-2xl hover:shadow-[#F1171E]/50 hover:-translate-y-0.5 text-base sm:text-lg whitespace-nowrap active:scale-[0.98]"
@@ -113,7 +113,7 @@ export function HeroSection() {
             className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 pt-6 border-t border-white/15 max-w-xl lg:max-w-2xl"
           >
             {/* Fast Response */}
-            <div className="flex items-start gap-3 p-3.5 rounded-xl bg-black/30 backdrop-blur-md border border-white/10 hover:border-white/20 transition-all">
+            <div className="flex items-start gap-3 p-3.5 rounded-xl bg-black/35 backdrop-blur-md border border-white/10 hover:border-white/20 transition-all">
               <div className="w-8 h-8 rounded-lg bg-[#F1171E]/20 flex items-center justify-center text-[#F1171E] shrink-0 mt-0.5">
                 <Lightning weight="bold" size={18} />
               </div>
@@ -160,7 +160,7 @@ export function HeroSection() {
         </div>
       </div>
 
-      {/* ─── FLOATING BADGE OVER THE MECHANIC ON THE RIGHT ─── */}
+      {/* ─── FLOATING BADGE OVER THE RIGHT SIDE ─── */}
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
