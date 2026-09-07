@@ -2,19 +2,19 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight, ShieldCheck, Certificate } from "@phosphor-icons/react";
+import { ArrowRight, ShieldCheck } from "@phosphor-icons/react";
 
 export function WhoWeAre() {
   return (
     <section className="py-20 lg:py-28 bg-white overflow-hidden perspective-[1200px]">
       <div className="max-w-[1400px] mx-auto px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-          {/* Left - 3D Pop-Out Emblem Card */}
+          {/* Left - POP-OUT TYPE 2: HOLOGRAPHIC SCALE & DEPTH-ZOOM POP-OUT */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.9, rotateY: -12, rotateX: 6 }}
-            whileInView={{ opacity: 1, scale: 1, rotateY: 0, rotateX: 0 }}
+            initial={{ opacity: 0, scale: 0.86, y: 35, filter: "blur(6px)" }}
+            whileInView={{ opacity: 1, scale: 1, y: 0, filter: "blur(0px)" }}
             viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
             whileHover={{
               scale: 1.025,
               rotateY: 3,
@@ -23,9 +23,9 @@ export function WhoWeAre() {
             }}
             className="will-change-transform"
           >
-            <div className="relative aspect-[4/3] rounded-3xl overflow-hidden bg-gradient-to-br from-[#F4F8FB] via-white to-[#EEF5FB] border border-[#E2E8F0] p-8 sm:p-10 flex flex-col items-center justify-center shadow-xl group">
-              {/* Subtle radial glow */}
-              <div className="absolute inset-0 bg-radial from-[#00E5FF]/[0.03] to-transparent pointer-events-none" />
+            <div className="relative aspect-[4/3] rounded-3xl overflow-hidden bg-gradient-to-br from-[#F4F8FB] via-white to-[#EEF5FB] border border-[#E2E8F0] p-8 sm:p-10 flex flex-col items-center justify-center shadow-2xl group">
+              {/* Subtle ambient radial glow */}
+              <div className="absolute inset-0 bg-radial from-[#00E5FF]/[0.04] to-transparent pointer-events-none" />
 
               <div className="relative w-64 h-36 mb-4 transition-transform duration-300 group-hover:scale-105">
                 <img
@@ -36,7 +36,7 @@ export function WhoWeAre() {
               </div>
 
               <div className="text-center relative z-10">
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#F1171E]/10 text-[#F1171E] text-xs font-bold uppercase tracking-wider mb-2">
+                <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#F1171E]/10 text-[#F1171E] text-xs font-bold uppercase tracking-wider mb-2">
                   <ShieldCheck weight="fill" size={14} />
                   Est. 1988 • UAE Heritage
                 </span>
@@ -54,10 +54,10 @@ export function WhoWeAre() {
             </div>
           </motion.div>
 
-          {/* Right - Content with Staggered 3D Pop-In */}
+          {/* Right - POP-OUT TYPE 4: MAGNETIC SLIDE & UNFOLD */}
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, x: 45, rotateY: 8, scale: 0.95 }}
+            whileInView={{ opacity: 1, x: 0, rotateY: 0, scale: 1 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           >

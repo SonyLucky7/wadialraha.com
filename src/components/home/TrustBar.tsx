@@ -34,17 +34,18 @@ export function TrustBar() {
                   ? "md:border-r md:border-gray-border border-b md:border-b-0"
                   : ""
               }`}
-              initial={{ opacity: 0, y: 40, scale: 0.95, rotateX: 10 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1, rotateX: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
+              // ─── POP-OUT TYPE 3: DOMINO WAVE & SEQUENTIAL STAGGER ───
+              initial={{ opacity: 0, y: 45, x: -18, scale: 0.9, rotateZ: -1.5 }}
+              whileInView={{ opacity: 1, y: 0, x: 0, scale: 1, rotateZ: 0 }}
+              viewport={{ once: true, amount: 0.25 }}
               transition={{
-                duration: 0.55,
-                delay: index * 0.1,
+                duration: 0.6,
+                delay: index * 0.12,
                 ease: [0.16, 1, 0.3, 1],
               }}
               whileHover={{
-                y: -4,
-                scale: 1.015,
+                y: -6,
+                scale: 1.02,
                 transition: { duration: 0.2 },
               }}
             >
