@@ -15,9 +15,8 @@ const ICON_MAP: Record<string, React.ElementType> = {
 };
 
 export function ServicesOverview() {
-
   return (
-    <section className="py-20 lg:py-28 bg-gray-light">
+    <section className="py-20 lg:py-28 bg-[#F8FAFC] perspective-[1200px] overflow-hidden">
       <div className="max-w-[1400px] mx-auto px-6 lg:px-8">
         {/* Section Header */}
         <motion.div
@@ -29,7 +28,7 @@ export function ServicesOverview() {
         >
           <div className="flex items-center justify-center gap-2.5 mb-3">
             <span className="w-8 h-[2px] bg-[#F1171E]"></span>
-            <span className="text-xs sm:text-sm uppercase tracking-widest font-bold text-[#F1171E]">
+            <span className="text-xs sm:text-sm uppercase tracking-widest font-extrabold text-[#F1171E]">
               Core Capabilities & Solutions
             </span>
             <span className="w-8 h-[2px] bg-[#F1171E]"></span>
@@ -43,49 +42,59 @@ export function ServicesOverview() {
           </p>
         </motion.div>
 
-        {/* Service Cards Grid */}
+        {/* Service Cards Grid with 3D Pop-Outs */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {SERVICES.map((service, index) => {
             const IconComponent = ICON_MAP[service.icon] || Snowflake;
             return (
               <motion.div
                 key={service.id}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.2 }}
+                initial={{ opacity: 0, y: 45, scale: 0.93, rotateX: 12 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1, rotateX: 0 }}
+                viewport={{ once: true, amount: 0.15 }}
                 transition={{
-                  duration: 0.5,
+                  duration: 0.6,
                   delay: index * 0.08,
                   ease: [0.16, 1, 0.3, 1],
                 }}
+                whileHover={{
+                  y: -8,
+                  scale: 1.025,
+                  rotateX: -2,
+                  rotateY: 1.5,
+                  transition: { duration: 0.25 },
+                }}
+                className="will-change-transform h-full"
               >
                 <Link href={`/services/${service.slug}`} className="group block h-full">
-                  <div className="relative h-full bg-white border border-gray-border rounded-xl p-7 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:border-[#F1171E]/40">
-                    {/* Number */}
-                    <span className="text-5xl font-extrabold text-[#F1171E]/15 absolute top-5 right-6 select-none">
-                      {service.number}
-                    </span>
+                  <div className="relative h-full bg-white border border-gray-border rounded-2xl p-7 sm:p-8 transition-all duration-300 shadow-md hover:shadow-2xl hover:border-[#F1171E]/40 flex flex-col justify-between">
+                    <div>
+                      {/* Big watermark number */}
+                      <span className="text-5xl font-extrabold text-[#F1171E]/10 absolute top-5 right-6 select-none transition-colors group-hover:text-[#F1171E]/20">
+                        {service.number}
+                      </span>
 
-                    {/* Icon */}
-                    <div className="w-12 h-12 rounded-lg bg-[#F1171E]/10 flex items-center justify-center mb-5">
-                      <IconComponent weight="duotone" size={24} className="text-[#F1171E]" />
+                      {/* Icon with 3D hover pop */}
+                      <div className="w-13 h-13 rounded-xl bg-[#F1171E]/10 flex items-center justify-center mb-5 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3">
+                        <IconComponent weight="duotone" size={26} className="text-[#F1171E]" />
+                      </div>
+
+                      {/* Content */}
+                      <h3 className="text-lg sm:text-xl font-extrabold text-[#0B1220] mb-3 pr-10 group-hover:text-[#F1171E] transition-colors">
+                        {service.shortTitle}
+                      </h3>
+                      <p className="text-gray-600 text-sm leading-relaxed mb-6">
+                        {service.description}
+                      </p>
                     </div>
 
-                    {/* Content */}
-                    <h3 className="text-lg font-bold text-navy mb-3 pr-12 group-hover:text-[#F1171E] transition-colors">
-                      {service.shortTitle}
-                    </h3>
-                    <p className="text-gray-medium text-sm leading-relaxed mb-5">
-                      {service.description}
-                    </p>
-
-                    {/* CTA */}
-                    <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-navy group-hover:text-[#F1171E] transition-colors">
-                      Explore Service
+                    {/* Bottom CTA with arrow slide */}
+                    <span className="inline-flex items-center gap-2 text-sm font-extrabold text-[#133256] group-hover:text-[#F1171E] transition-colors pt-2 border-t border-gray-100">
+                      <span>Explore Service Details</span>
                       <ArrowRight
                         weight="bold"
-                        size={14}
-                        className="group-hover:translate-x-1 transition-transform text-[#F1171E]"
+                        size={15}
+                        className="group-hover:translate-x-1.5 transition-transform text-[#F1171E]"
                       />
                     </span>
                   </div>
@@ -98,3 +107,4 @@ export function ServicesOverview() {
     </section>
   );
 }
+export default ServicesOverview;

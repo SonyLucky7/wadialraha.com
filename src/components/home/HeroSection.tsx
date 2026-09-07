@@ -3,24 +3,24 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import {
   ArrowRight,
   Lightning,
   Gear,
   Clock,
   Warning,
-  Phone,
 } from "@phosphor-icons/react";
 import { COMPANY } from "@/lib/constants";
 
 export function HeroSection() {
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const animationFrameRef = useRef<number | null>(null);
+
   const [tiltOffset, setTiltOffset] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState<boolean>(false);
   const [isMobile, setIsMobile] = useState<boolean>(false);
-
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const animationFrameRef = useRef<number | null>(null);
 
   // Detect mobile viewport
   useEffect(() => {
@@ -30,12 +30,32 @@ export function HeroSection() {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  // Subtle Mouse Parallax Tilt for 3D depth
+  // ─── SCROLL-DRIVEN 3D ANIMATION & POP-OUT DYNAMICS ───
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  });
+
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 90,
+    damping: 26,
+    restDelta: 0.001,
+  });
+
+  // 3D Parallax & Depth transforms
+  const acY = useTransform(smoothProgress, [0, 1], [0, 120]);
+  const acScale = useTransform(smoothProgress, [0, 0.45, 1], [1, 1.05, 0.94]);
+  const acRotateX = useTransform(smoothProgress, [0, 1], [0, 8]);
+  const acRotateY = useTransform(smoothProgress, [0, 1], [0, -6]);
+  const contentY = useTransform(smoothProgress, [0, 1], [0, 60]);
+  const contentOpacity = useTransform(smoothProgress, [0, 0.85, 1], [1, 0.9, 0.3]);
+
+  // Subtle Interactive Mouse Parallax
   const handleMouseMove = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
       const rect = e.currentTarget.getBoundingClientRect();
-      const x = ((e.clientX - rect.left) / rect.width - 0.5) * 14;
-      const y = ((e.clientY - rect.top) / rect.height - 0.5) * 14;
+      const x = ((e.clientX - rect.left) / rect.width - 0.5) * 16;
+      const y = ((e.clientY - rect.top) / rect.height - 0.5) * 16;
       setTiltOffset({ x, y });
     },
     []
@@ -53,7 +73,6 @@ export function HeroSection() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    // Respect user's reduced-motion preference
     const prefersReducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)"
     ).matches;
@@ -86,14 +105,9 @@ export function HeroSection() {
     const spawnParticle = (): Particle => {
       const rand = Math.random();
       const pType =
-        rand < 0.32
-          ? "warm"
-          : rand < 0.8
-          ? "cool"
-          : "heat-transfer";
+        rand < 0.32 ? "warm" : rand < 0.8 ? "cool" : "heat-transfer";
 
       if (pType === "warm") {
-        // Enters from above / room into top intake
         return {
           x: width * 0.28 + Math.random() * (width * 0.32),
           y: height * 0.04 + Math.random() * (height * 0.08),
@@ -105,7 +119,6 @@ export function HeroSection() {
           type: "warm",
         };
       } else if (pType === "heat-transfer") {
-        // Thermal dissipation flowing toward right condenser
         return {
           x: width * 0.64 + Math.random() * (width * 0.12),
           y: height * 0.18 + Math.random() * (height * 0.22),
@@ -117,7 +130,6 @@ export function HeroSection() {
           type: "heat-transfer",
         };
       } else {
-        // Chilled air cascading down into the room from louver vent
         return {
           x: width * 0.44 + (Math.random() - 0.3) * (width * 0.28),
           y: height * 0.62 + Math.random() * (height * 0.08),
@@ -131,7 +143,6 @@ export function HeroSection() {
       }
     };
 
-    // Initialize initial pool
     for (let i = 0; i < MAX_PARTICLES; i++) {
       const p = spawnParticle();
       p.life = Math.random() * p.maxLife;
@@ -159,17 +170,14 @@ export function HeroSection() {
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
 
         if (p.type === "warm") {
-          // Warm air intake: soft red/orange
           ctx.fillStyle = `rgba(255, 107, 74, ${alpha * 0.6})`;
           ctx.shadowColor = "rgba(241, 23, 30, 0.65)";
           ctx.shadowBlur = 8;
         } else if (p.type === "heat-transfer") {
-          // Heat dissipation: vivid brand red/amber
           ctx.fillStyle = `rgba(241, 23, 30, ${alpha * 0.7})`;
           ctx.shadowColor = "rgba(255, 87, 34, 0.85)";
           ctx.shadowBlur = 10;
         } else {
-          // Chilled air: luminous cyan-blue
           ctx.fillStyle = `rgba(0, 229, 255, ${alpha * 0.8})`;
           ctx.shadowColor = "rgba(56, 189, 248, 0.95)";
           ctx.shadowBlur = 12;
@@ -177,7 +185,6 @@ export function HeroSection() {
 
         ctx.fill();
 
-        // Reset expired particles
         if (p.life >= p.maxLife || p.y > height || p.x > width) {
           particles[i] = spawnParticle();
         }
@@ -197,7 +204,10 @@ export function HeroSection() {
   }, [isMobile]);
 
   return (
-    <section className="relative min-h-screen bg-[#071322] text-white pt-24 sm:pt-28 lg:pt-32 pb-14 sm:pb-18 lg:pb-22 overflow-hidden flex flex-col justify-center">
+    <section
+      ref={sectionRef}
+      className="relative min-h-screen bg-[#071322] text-white pt-24 sm:pt-28 lg:pt-32 pb-14 sm:pb-18 lg:pb-22 overflow-hidden flex flex-col justify-center perspective-[1200px]"
+    >
       {/* ─── TECHNICAL ARCHITECTURAL BACKGROUND ─── */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {/* Deep Navy Gradients */}
@@ -226,9 +236,12 @@ export function HeroSection() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 xl:gap-14 items-center">
           
           {/* ══════════════════════════════════════════════════════════════════
-              LEFT SIDE: HERO CONTENT & VALUE PROPOSITION (40-44% Width)
+              LEFT SIDE: HERO CONTENT WITH SCROLL DEPTH PARALLAX
               ══════════════════════════════════════════════════════════════════ */}
-          <div className="lg:col-span-5 xl:col-span-5 z-20 flex flex-col justify-center">
+          <motion.div
+            style={{ y: contentY, opacity: contentOpacity }}
+            className="lg:col-span-5 xl:col-span-5 z-20 flex flex-col justify-center"
+          >
             {/* 1. Eyebrow */}
             <motion.div
               initial={{ opacity: 0, y: 15 }}
@@ -265,41 +278,40 @@ export function HeroSection() {
               services across the UAE — with fast response and reliable support.
             </motion.p>
 
-            {/* 4. CTA Buttons */}
+            {/* 4. CTA Buttons with 3D Hover Lift */}
             <motion.div
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
               className="flex flex-wrap items-center gap-3.5 sm:gap-4 mb-8 sm:mb-10"
             >
-              {/* Primary CTA: Request a Quote */}
+              {/* Primary CTA */}
               <Link
                 href="/contact"
-                className="inline-flex items-center justify-center gap-2.5 h-13 px-7 sm:px-8 bg-[#F1171E] text-white font-bold rounded-xl hover:bg-[#D61218] transition-all shadow-lg shadow-[#F1171E]/25 hover:shadow-xl hover:shadow-[#F1171E]/40 text-sm sm:text-base whitespace-nowrap active:scale-[0.98]"
+                className="group inline-flex items-center justify-center gap-2.5 h-13 px-7 sm:px-8 bg-[#F1171E] text-white font-bold rounded-xl hover:bg-[#D61218] transition-all shadow-lg shadow-[#F1171E]/25 hover:shadow-xl hover:shadow-[#F1171E]/40 hover:-translate-y-0.5 text-sm sm:text-base whitespace-nowrap active:scale-[0.98]"
               >
                 <span>Request a Quote</span>
-                <ArrowRight weight="bold" size={18} />
+                <ArrowRight weight="bold" size={18} className="group-hover:translate-x-1 transition-transform" />
               </Link>
 
-              {/* 24/7 Emergency Service Link */}
+              {/* Emergency Service CTA */}
               <Link
                 href={`tel:${COMPANY.contacts[0].phoneRaw}`}
-                className="inline-flex items-center justify-center gap-2.5 h-13 px-6 sm:px-7 rounded-xl border-2 border-white/25 text-white font-semibold hover:bg-white/10 hover:border-white/40 transition-all text-sm sm:text-base whitespace-nowrap backdrop-blur-sm active:scale-[0.98]"
+                className="inline-flex items-center justify-center gap-2.5 h-13 px-6 sm:px-7 rounded-xl border-2 border-white/25 text-white font-semibold hover:bg-white/10 hover:border-white/40 hover:-translate-y-0.5 transition-all text-sm sm:text-base whitespace-nowrap backdrop-blur-sm active:scale-[0.98]"
               >
                 <Warning weight="bold" size={18} className="text-[#F1171E]" />
                 <span>24/7 Emergency Service</span>
               </Link>
             </motion.div>
 
-            {/* 5. Trust Points */}
+            {/* 5. Trust Points with 3D Staggered Reveal */}
             <motion.div
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
               className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-4 border-t border-white/10"
             >
-              {/* Fast Response */}
-              <div className="flex items-start gap-3 p-3 rounded-xl bg-white/[0.03] border border-white/10 hover:border-white/20 transition-colors">
+              <div className="flex items-start gap-3 p-3 rounded-xl bg-white/[0.03] border border-white/10 hover:border-white/20 hover:-translate-y-1 hover:shadow-md transition-all">
                 <div className="w-8 h-8 rounded-lg bg-[#F1171E]/15 flex items-center justify-center text-[#F1171E] shrink-0 mt-0.5">
                   <Lightning weight="bold" size={18} />
                 </div>
@@ -313,8 +325,7 @@ export function HeroSection() {
                 </div>
               </div>
 
-              {/* Competitive Pricing */}
-              <div className="flex items-start gap-3 p-3 rounded-xl bg-white/[0.03] border border-white/10 hover:border-white/20 transition-colors">
+              <div className="flex items-start gap-3 p-3 rounded-xl bg-white/[0.03] border border-white/10 hover:border-white/20 hover:-translate-y-1 hover:shadow-md transition-all">
                 <div className="w-8 h-8 rounded-lg bg-[#F1171E]/15 flex items-center justify-center text-[#F1171E] shrink-0 mt-0.5">
                   <Gear weight="bold" size={18} />
                 </div>
@@ -328,8 +339,7 @@ export function HeroSection() {
                 </div>
               </div>
 
-              {/* 24/7 Emergency Service */}
-              <div className="flex items-start gap-3 p-3 rounded-xl bg-white/[0.03] border border-white/10 hover:border-white/20 transition-colors">
+              <div className="flex items-start gap-3 p-3 rounded-xl bg-white/[0.03] border border-white/10 hover:border-white/20 hover:-translate-y-1 hover:shadow-md transition-all">
                 <div className="w-8 h-8 rounded-lg bg-[#F1171E]/15 flex items-center justify-center text-[#F1171E] shrink-0 mt-0.5">
                   <Clock weight="bold" size={18} />
                 </div>
@@ -343,18 +353,25 @@ export function HeroSection() {
                 </div>
               </div>
             </motion.div>
-          </div>
+          </motion.div>
 
           {/* ══════════════════════════════════════════════════════════════════
-              RIGHT SIDE: PURE 3D AC CUTAWAY VISUAL (Clean, Uncluttered)
+              RIGHT SIDE: 3D AC CUTAWAY WITH SCROLL POP-OUT & DEPTH PARALLAX
               ══════════════════════════════════════════════════════════════════ */}
-          <div
+          <motion.div
             id="hero-3d-visual-container"
-            className="lg:col-span-7 xl:col-span-7 relative z-10 lg:-mr-6 xl:-mr-12"
+            style={{
+              y: acY,
+              scale: acScale,
+              rotateX: acRotateX,
+              rotateY: acRotateY,
+              transformStyle: "preserve-3d",
+            }}
+            className="lg:col-span-7 xl:col-span-7 relative z-10 lg:-mr-6 xl:-mr-12 will-change-transform"
           >
             {/* 3D Viewport Frame with Fluid Airflow Simulation & Mouse Parallax */}
             <div
-              className="relative aspect-[16/10] sm:aspect-[16/9.5] rounded-3xl overflow-hidden border border-white/15 bg-[#050E1A] shadow-2xl select-none"
+              className="relative aspect-[16/10] sm:aspect-[16/9.5] rounded-3xl overflow-hidden border border-white/15 bg-[#050E1A] shadow-2xl select-none group transition-shadow duration-500 hover:shadow-[0_25px_60px_-15px_rgba(0,229,255,0.15)]"
               onMouseMove={handleMouseMove}
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={handleMouseLeave}
@@ -363,9 +380,11 @@ export function HeroSection() {
               <motion.div
                 className="relative w-full h-full"
                 animate={{
-                  scale: isHovered ? 1.03 : 1.01,
+                  scale: isHovered ? 1.04 : 1.01,
                   x: tiltOffset.x,
                   y: tiltOffset.y,
+                  rotateX: tiltOffset.y * -0.4,
+                  rotateY: tiltOffset.x * 0.4,
                 }}
                 transition={{ type: "spring", damping: 25, stiffness: 80 }}
               >
@@ -383,13 +402,13 @@ export function HeroSection() {
               <div className="absolute inset-0 bg-gradient-to-t from-[#071322] via-transparent to-[#071322]/40 pointer-events-none" />
               <div className="absolute inset-0 bg-gradient-to-r from-[#071322]/70 via-transparent to-[#071322]/30 pointer-events-none lg:block hidden" />
 
-              {/* Continuous Fluid Particle Canvas Overlay (Warm Intake & Luminous Cool Cascades) */}
+              {/* Continuous Fluid Particle Canvas Overlay */}
               <canvas
                 ref={canvasRef}
                 className="absolute inset-0 pointer-events-none z-10 w-full h-full"
               />
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

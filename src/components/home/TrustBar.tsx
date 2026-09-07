@@ -7,54 +7,55 @@ const TRUST_ITEMS = [
   {
     icon: Lightning,
     title: "Fast Response",
-    description:
-      "Accurate diagnosis and fast repair for AC issues.",
+    description: "Accurate diagnosis and fast repair for AC issues across the UAE.",
   },
   {
     icon: CurrencyDollar,
     title: "Competitive Pricing",
-    description:
-      "Professional service with competitive pricing and customer satisfaction as a priority.",
+    description: "Professional service with competitive pricing and customer satisfaction as a priority.",
   },
   {
     icon: Clock,
     title: "24/7 Emergency Service",
-    description:
-      "Support available for urgent technical requirements.",
+    description: "Round-the-clock technical dispatch ready for urgent requirements.",
   },
 ];
 
 export function TrustBar() {
-
   return (
-    <section className="relative z-10 -mt-1 bg-white">
+    <section className="relative z-20 -mt-1 bg-white">
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid md:grid-cols-3 gap-0 border border-gray-border rounded-2xl overflow-hidden shadow-lg -mt-10 sm:-mt-12 lg:-mt-14 bg-white">
+        <div className="grid md:grid-cols-3 gap-0 border border-gray-border rounded-2xl overflow-hidden shadow-xl -mt-10 sm:-mt-12 lg:-mt-14 bg-white perspective-[1000px]">
           {TRUST_ITEMS.map((item, index) => (
             <motion.div
               key={item.title}
-              className={`flex items-start gap-4 p-6 lg:p-8 ${
+              className={`flex items-start gap-4 p-6 lg:p-8 transition-colors duration-300 hover:bg-[#F8FAFC] will-change-transform ${
                 index < TRUST_ITEMS.length - 1
                   ? "md:border-r md:border-gray-border border-b md:border-b-0"
                   : ""
               }`}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
+              initial={{ opacity: 0, y: 40, scale: 0.95, rotateX: 10 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1, rotateX: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
               transition={{
-                duration: 0.5,
+                duration: 0.55,
                 delay: index * 0.1,
                 ease: [0.16, 1, 0.3, 1],
               }}
+              whileHover={{
+                y: -4,
+                scale: 1.015,
+                transition: { duration: 0.2 },
+              }}
             >
-              <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-[#F1171E]/10 flex items-center justify-center">
-                <item.icon weight="duotone" size={24} className="text-[#F1171E]" />
+              <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-[#F1171E]/10 flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
+                <item.icon weight="duotone" size={26} className="text-[#F1171E]" />
               </div>
               <div>
-                <h3 className="font-bold text-navy text-base mb-1">
+                <h3 className="font-extrabold text-[#0B1220] text-base mb-1">
                   {item.title}
                 </h3>
-                <p className="text-gray-medium text-sm leading-relaxed">
+                <p className="text-gray-600 text-sm leading-relaxed">
                   {item.description}
                 </p>
               </div>
@@ -65,3 +66,4 @@ export function TrustBar() {
     </section>
   );
 }
+export default TrustBar;
