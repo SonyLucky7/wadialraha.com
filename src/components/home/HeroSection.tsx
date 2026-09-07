@@ -10,45 +10,45 @@ import {
   Gear,
   Clock,
   Warning,
-  ShieldCheck,
 } from "@phosphor-icons/react";
 import { COMPANY } from "@/lib/constants";
 
 export function HeroSection() {
   return (
-    <section className="relative min-h-[100dvh] lg:min-h-screen bg-[#071322] text-white flex items-center overflow-hidden pt-24 sm:pt-28 pb-16 sm:pb-20">
+    <section className="relative min-h-[100dvh] lg:min-h-screen bg-[#071322] text-white flex items-center overflow-hidden pt-20 sm:pt-24 lg:pt-28 pb-16 sm:pb-20">
       {/* ─── FULL-BLEED 4K/8K LOSSLESS BACKGROUND (3840 x 2143 Native UHD) ─── */}
-      <div className="absolute inset-0 z-0">
+      <div className="absolute inset-0 z-0 overflow-hidden">
         <Image
-          src="/images/hero/ac-mechanic-hero-4k-flipped.jpg"
+          src="/images/hero/ac-mechanic-hero-fullbleed-4k.jpg"
           alt="WADI AL RAHA Professional Certified AC Mechanic in UAE"
           fill
           priority
-          unoptimized // Prevents Next.js downsampling; serves full native 3840px 4K pixels
+          unoptimized // Serves native 3840px 4K pixels with zero downsampling
           sizes="100vw"
-          className="object-cover object-[70%_center] lg:object-[center_35%] filter contrast-[1.03] select-none"
+          // Crucial: Anchored to TOP and RIGHT so head and face are NEVER cut off
+          className="object-cover object-[78%_top] lg:object-[88%_top] filter contrast-[1.03] select-none pointer-events-none"
         />
 
-        {/* Cinematic Deep Navy Gradient Overlay for Text Readability */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#071322] via-[#071322]/80 to-transparent w-full lg:w-[62%] pointer-events-none" />
+        {/* Left-side dark gradient strictly covering the left 48-52% so it NEVER overlaps the technician */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#071322] via-[#071322]/85 to-transparent w-full lg:w-[50%] pointer-events-none" />
         
-        {/* Subtle top and bottom fades */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#071322] via-transparent to-[#071322]/50 pointer-events-none" />
+        {/* Subtle top & bottom ambient edge fades */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#071322] via-transparent to-[#071322]/40 pointer-events-none" />
         
-        {/* Mobile dark backdrop tint to ensure contrast */}
+        {/* Mobile-only background tint so text remains legible on narrow portrait screens */}
         <div className="absolute inset-0 bg-[#071322]/65 lg:hidden pointer-events-none" />
       </div>
 
-      {/* ─── FOREGROUND CONTENT & BUTTONS OVERLAID OVER THE IMAGE ─── */}
+      {/* ─── FOREGROUND CONTENT & BUTTONS OVERLAID ON THE LEFT ─── */}
       <div className="relative z-10 max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 w-full">
-        <div className="max-w-2xl lg:max-w-3xl">
+        <div className="max-w-xl lg:max-w-2xl">
           
           {/* 1. Eyebrow */}
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="flex items-center gap-2.5 mb-4 sm:mb-5"
+            className="flex items-center gap-2.5 mb-3 sm:mb-4"
           >
             <span className="w-8 h-[2px] bg-[#F1171E]" />
             <span className="text-xs sm:text-sm uppercase tracking-widest font-extrabold text-[#F1171E]">
@@ -62,7 +62,7 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-[56px] xl:text-7xl font-extrabold text-white tracking-tight leading-[1.06] mb-5 sm:mb-6"
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-[52px] xl:text-6xl 2xl:text-7xl font-extrabold text-white tracking-tight leading-[1.08] mb-4 sm:mb-5"
           >
             COOLER SPACES. <br />
             <span className="text-[#F1171E] drop-shadow-sm">HAPPIER</span> LIVES.
@@ -73,49 +73,49 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="text-base sm:text-lg lg:text-xl text-gray-200 leading-relaxed max-w-xl mb-8 sm:mb-10 font-medium"
+            className="text-base sm:text-lg lg:text-xl text-gray-200 leading-relaxed max-w-lg mb-7 sm:mb-9 font-medium"
           >
             Professional air conditioning, cooling, electrical and plumbing
             services across the UAE — with fast response and certified engineering support.
           </motion.p>
 
-          {/* 4. Action Buttons (Overlaid on Image) */}
+          {/* 4. Action Buttons */}
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="flex flex-wrap items-center gap-4 mb-10 sm:mb-12"
+            className="flex flex-wrap items-center gap-3.5 sm:gap-4 mb-9 sm:mb-11"
           >
-            {/* Primary CTA */}
+            {/* Primary CTA: Request a Quote */}
             <Link
               href="/contact"
-              className="group inline-flex items-center justify-center gap-2.5 h-14 px-8 bg-[#F1171E] text-white font-bold rounded-xl hover:bg-[#D61218] transition-all shadow-xl shadow-[#F1171E]/30 hover:shadow-2xl hover:shadow-[#F1171E]/50 hover:-translate-y-0.5 text-base sm:text-lg whitespace-nowrap active:scale-[0.98]"
+              className="group inline-flex items-center justify-center gap-2.5 h-13 sm:h-14 px-7 sm:px-8 bg-[#F1171E] text-white font-bold rounded-xl hover:bg-[#D61218] transition-all shadow-xl shadow-[#F1171E]/30 hover:shadow-2xl hover:shadow-[#F1171E]/50 hover:-translate-y-0.5 text-sm sm:text-base whitespace-nowrap active:scale-[0.98]"
             >
               <span>Request a Quote</span>
-              <ArrowRight weight="bold" size={20} className="group-hover:translate-x-1.5 transition-transform" />
+              <ArrowRight weight="bold" size={18} className="group-hover:translate-x-1.5 transition-transform" />
             </Link>
 
             {/* 24/7 Emergency Service Hotline */}
             <Link
               href={`tel:${COMPANY.contacts[0].phoneRaw}`}
-              className="inline-flex items-center justify-center gap-2.5 h-14 px-8 rounded-xl border-2 border-white/30 text-white font-bold hover:bg-white/10 hover:border-white/50 hover:-translate-y-0.5 transition-all text-base sm:text-lg whitespace-nowrap backdrop-blur-md active:scale-[0.98]"
+              className="inline-flex items-center justify-center gap-2.5 h-13 sm:h-14 px-6 sm:px-7 rounded-xl border-2 border-white/30 text-white font-bold hover:bg-white/10 hover:border-white/50 hover:-translate-y-0.5 transition-all text-sm sm:text-base whitespace-nowrap backdrop-blur-md active:scale-[0.98]"
             >
-              <Warning weight="bold" size={20} className="text-[#F1171E]" />
+              <Warning weight="bold" size={18} className="text-[#F1171E]" />
               <span>24/7 Emergency Service</span>
             </Link>
           </motion.div>
 
-          {/* 5. Trust Indicators (Overlaid on Image) */}
+          {/* 5. Trust Indicators */}
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 pt-6 border-t border-white/15 max-w-xl lg:max-w-2xl"
+            className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-5 border-t border-white/15 max-w-lg lg:max-w-xl"
           >
             {/* Fast Response */}
-            <div className="flex items-start gap-3 p-3.5 rounded-xl bg-black/35 backdrop-blur-md border border-white/10 hover:border-white/20 transition-all">
-              <div className="w-8 h-8 rounded-lg bg-[#F1171E]/20 flex items-center justify-center text-[#F1171E] shrink-0 mt-0.5">
-                <Lightning weight="bold" size={18} />
+            <div className="flex items-start gap-2.5 p-3 rounded-xl bg-black/30 backdrop-blur-md border border-white/10 hover:border-white/20 transition-all">
+              <div className="w-7 h-7 rounded-lg bg-[#F1171E]/20 flex items-center justify-center text-[#F1171E] shrink-0 mt-0.5">
+                <Lightning weight="bold" size={16} />
               </div>
               <div>
                 <h4 className="font-extrabold text-xs text-white uppercase tracking-wider">
@@ -128,13 +128,13 @@ export function HeroSection() {
             </div>
 
             {/* Competitive Pricing */}
-            <div className="flex items-start gap-3 p-3.5 rounded-xl bg-black/30 backdrop-blur-md border border-white/10 hover:border-white/20 transition-all">
-              <div className="w-8 h-8 rounded-lg bg-[#F1171E]/20 flex items-center justify-center text-[#F1171E] shrink-0 mt-0.5">
-                <Gear weight="bold" size={18} />
+            <div className="flex items-start gap-2.5 p-3 rounded-xl bg-black/30 backdrop-blur-md border border-white/10 hover:border-white/20 transition-all">
+              <div className="w-7 h-7 rounded-lg bg-[#F1171E]/20 flex items-center justify-center text-[#F1171E] shrink-0 mt-0.5">
+                <Gear weight="bold" size={16} />
               </div>
               <div>
                 <h4 className="font-extrabold text-xs text-white uppercase tracking-wider">
-                  COMPETITIVE PRICING
+                  COMPETITIVE
                 </h4>
                 <p className="text-[11px] text-gray-300 mt-0.5 leading-snug">
                   Fair, Transparent Rates
@@ -143,9 +143,9 @@ export function HeroSection() {
             </div>
 
             {/* 24/7 Emergency */}
-            <div className="flex items-start gap-3 p-3.5 rounded-xl bg-black/30 backdrop-blur-md border border-white/10 hover:border-white/20 transition-all">
+            <div className="flex items-start gap-2.5 p-3 rounded-xl bg-black/30 backdrop-blur-md border border-white/10 hover:border-white/20 transition-all">
               <div className="w-8 h-8 rounded-lg bg-[#F1171E]/20 flex items-center justify-center text-[#F1171E] shrink-0 mt-0.5">
-                <Clock weight="bold" size={18} />
+                <Clock weight="bold" size={16} />
               </div>
               <div>
                 <h4 className="font-extrabold text-xs text-white uppercase tracking-wider">
@@ -159,26 +159,6 @@ export function HeroSection() {
           </motion.div>
         </div>
       </div>
-
-      {/* ─── FLOATING BADGE OVER THE RIGHT SIDE ─── */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.7, delay: 0.5 }}
-        className="hidden lg:flex absolute bottom-12 right-12 z-10 items-center gap-3 p-4 rounded-2xl bg-[#0B1E34]/85 backdrop-blur-md border border-white/20 shadow-2xl max-w-sm"
-      >
-        <div className="w-11 h-11 rounded-xl bg-[#F1171E] flex items-center justify-center text-white shrink-0 shadow-lg shadow-[#F1171E]/40">
-          <ShieldCheck weight="fill" size={24} />
-        </div>
-        <div>
-          <span className="block text-sm font-extrabold text-white leading-tight">
-            Certified UAE HVAC Engineers
-          </span>
-          <span className="block text-xs text-gray-300 leading-tight mt-1">
-            Split, Central, Package AC & Chillers
-          </span>
-        </div>
-      </motion.div>
     </section>
   );
 }
